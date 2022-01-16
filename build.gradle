@@ -1,0 +1,112 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin'
+    id 'org.beryx.jlink'
+    id 'org.javamodularity.moduleplugin'
+}
+
+ext {
+    junitVersion = '5.8.2'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8', '-Djna.library.path=lib/win32-x86-64']
+    mainModule = 'org.sehkah.ddonbrutforcergui'
+    mainClass = 'org.sehkah.ddonbrutforcergui.Launcher'
+}
+
+javafx {
+    version = '17.0.1'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.10.0'
+
+    // https://mvnrepository.com/artifact/org.controlsfx/controlsfx
+    implementation group: 'org.controlsfx', name: 'controlsfx', version: '11.1.1'
+    // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx
+    implementation group: 'org.kordamp.ikonli', name: 'ikonli-javafx', version: '12.3.0'
+    // https://mvnrepository.com/artifact/org.kordamp.bootstrapfx/bootstrapfx-core
+    implementation group: 'org.kordamp.bootstrapfx', name: 'bootstrapfx-core', version: '0.4.0'
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.70'
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitVersion}"
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: "${junitVersion}"
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitVersion}"
+}
+
+test {
+    useJUnitPlatform()
+
+    systemProperty('jna.library.path', 'lib/win32-x86-64')
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.sehkah.ddonbrutforcergui.Launcher'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+}
+
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages', '--ignore-signing-information']
+//    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+    launcher {
+        name = rootProject.name
+        jvmArgs = ['-Dfile.encoding=UTF-8', '-Djna.library.path=lib/win32-x86-64']
+    }
+
+    jpackage {
+        jvmArgs = ['-Dfile.encoding=UTF-8', '-Djna.library.path=lib/win32-x86-64']
+        skipInstaller = true
+        imageOptions += ['--win-console']
+        installerOptions += [
+                '--vendor', 'Sehkah',
+                '--app-version', version
+        ]
+        if (org.gradle.internal.os.OperatingSystem.current().windows) {
+            installerOptions += [
+                    '--win-per-user-install', '--win-dir-chooser', '--win-menu'
+            ]
+        }
+    }
+}
+
+jpackage.doLast {
+    copy {
+        from "lib/win32-x86-64/"
+        into "$buildDir/jpackage/$rootProject.name/lib/win32-x86-64"
+    }
+}
+
+//
+//jlinkZip {
+//    group = 'distribution'
+//    doLast {
+//        copy {
+//            from "lib/win32-x86-64/SeededXorshift128.dll"
+//            into "$imageDir/lib/win32-x86-64"
+//        }
+//    }
+//}
+
+//java {
+//    toolchain {
+//        languageVersion = JavaLanguageVersion.of(17)
+//        vendor = JvmVendorSpec.ADOPTOPENJDK
+//    }
+//}

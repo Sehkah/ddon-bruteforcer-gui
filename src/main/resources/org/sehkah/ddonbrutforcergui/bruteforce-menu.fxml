@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17"
+      fx:controller="org.sehkah.ddonbrutforcergui.Controller">
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <SeparatorMenuItem mnemonicParsing="false"/>
+            <MenuItem mnemonicParsing="false" text="Preferences…"/>
+            <SeparatorMenuItem mnemonicParsing="false"/>
+            <MenuItem mnemonicParsing="false" text="Quit"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp"/>
+        </Menu>
+    </MenuBar>
+    <AnchorPane VBox.vgrow="ALWAYS">
+        <TextArea fx:id="logTextArea" editable="false" layoutY="293.0" prefHeight="164.0" prefWidth="624.0"
+                  wrapText="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0"
+                  AnchorPane.topAnchor="200.0"/>
+        <TextField fx:id="ciphertextTextField" layoutX="77.0" layoutY="64.0" AnchorPane.rightAnchor="8.0"
+                   AnchorPane.topAnchor="40.0"/>
+        <Button fx:id="attemptBruteforceButton" layoutX="16.0" layoutY="188.0" mnemonicParsing="false"
+                onMouseClicked="#attemptBruteforceOnMouseClicked" text="attempt bruteforce" AnchorPane.rightAnchor="8.0"
+                AnchorPane.topAnchor="168.0"/>
+        <Label layoutX="15.0" layoutY="68.0" text="ciphertext" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="40.0"/>
+        <Label layoutX="15.0" layoutY="40.0" text="expected header" AnchorPane.leftAnchor="8.0"
+               AnchorPane.topAnchor="8.0"/>
+        <TextField fx:id="expectedHeaderTextField" layoutX="77.0" layoutY="36.0" AnchorPane.rightAnchor="8.0"
+                   AnchorPane.topAnchor="8.0"/>
+        <TextField fx:id="startMsTextField" layoutX="77.0" layoutY="91.0" prefHeight="25.0" prefWidth="149.0" text="0"
+                   AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="72.0"/>
+        <Label layoutX="15.0" layoutY="95.0" text="start ms" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="72.0"/>
+        <TextField fx:id="stopMsTextField" layoutX="77.0" layoutY="118.0" prefHeight="25.0" prefWidth="149.0"
+                   text="8192" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="104.0"/>
+        <Label layoutX="16.0" layoutY="122.0" text="stop ms" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="104.0"/>
+        <Label layoutX="15.0" layoutY="152.0" text="key depth" AnchorPane.leftAnchor="8.0"
+               AnchorPane.topAnchor="136.0"/>
+        <TextField fx:id="keyDepthTextField" layoutX="77.0" layoutY="148.0" text="8192" AnchorPane.rightAnchor="8.0"
+                   AnchorPane.topAnchor="136.0"/>
+    </AnchorPane>
+</VBox>
