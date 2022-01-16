@@ -1,4 +1,4 @@
-package org.sehkah.ddonbrutforcergui;
+package org.sehkah.ddonbruteforcergui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

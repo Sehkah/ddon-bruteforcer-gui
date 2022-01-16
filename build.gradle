@@ -16,8 +16,8 @@ tasks.withType(JavaCompile) {
 
 application {
     applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8', '-Djna.library.path=lib/win32-x86-64']
-    mainModule = 'org.sehkah.ddonbrutforcergui'
-    mainClass = 'org.sehkah.ddonbrutforcergui.Launcher'
+    mainModule = 'org.sehkah.ddonbruteforcergui'
+    mainClass = 'org.sehkah.ddonbruteforcergui.Launcher'
 }
 
 javafx {
@@ -54,7 +54,7 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'org.sehkah.ddonbrutforcergui.Launcher'
+        attributes 'Main-Class': 'org.sehkah.ddonbruteforcergui.Launcher'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }

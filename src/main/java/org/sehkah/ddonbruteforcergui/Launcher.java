@@ -1,4 +1,4 @@
-package org.sehkah.ddonbrutforcergui;
+package org.sehkah.ddonbruteforcergui;
 
 public class Launcher {
     public static void main(String[] args) {

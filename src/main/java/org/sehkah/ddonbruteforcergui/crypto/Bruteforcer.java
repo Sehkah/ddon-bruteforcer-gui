@@ -1,10 +1,10 @@
-package org.sehkah.ddonbrutforcergui.crypto;
+package org.sehkah.ddonbruteforcergui.crypto;
 
 import org.bouncycastle.crypto.engines.CamelliaEngine;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Hex;
-import org.sehkah.ddonbrutforcergui.prng.SeededXorshift128;
+import org.sehkah.ddonbruteforcergui.prng.SeededXorshift128;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Security;

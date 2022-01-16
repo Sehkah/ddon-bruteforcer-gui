@@ -1,4 +1,4 @@
-package org.sehkah.ddonbrutforcergui.prng;
+package org.sehkah.ddonbruteforcergui.prng;
 
 import org.junit.jupiter.api.Test;
 

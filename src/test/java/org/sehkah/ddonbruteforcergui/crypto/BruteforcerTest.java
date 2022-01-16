@@ -1,4 +1,4 @@
-package org.sehkah.ddonbrutforcergui.crypto;
+package org.sehkah.ddonbruteforcergui.crypto;
 
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.jupiter.api.Disabled;

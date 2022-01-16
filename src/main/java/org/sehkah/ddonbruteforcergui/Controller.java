@@ -1,11 +1,11 @@
-package org.sehkah.ddonbrutforcergui;
+package org.sehkah.ddonbruteforcergui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import org.sehkah.ddonbrutforcergui.crypto.Bruteforcer;
+import org.sehkah.ddonbruteforcergui.crypto.Bruteforcer;
 
 public class Controller {
     @FXML

@@ -1,4 +1,4 @@
-module org.sehkah.ddonbrutforcergui {
+module org.sehkah.ddonbruteforcergui {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -8,6 +8,6 @@ module org.sehkah.ddonbrutforcergui {
     requires org.bouncycastle.provider;
     requires com.sun.jna;
 
-    opens org.sehkah.ddonbrutforcergui to javafx.fxml;
-    exports org.sehkah.ddonbrutforcergui;
+    opens org.sehkah.ddonbruteforcergui to javafx.fxml;
+    exports org.sehkah.ddonbruteforcergui;
 }
