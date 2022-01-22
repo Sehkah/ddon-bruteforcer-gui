@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.Scene?>
+<?import javafx.stage.Stage?>
+<?import org.kordamp.ikonli.javafx.*?>
+<Stage title="%stageTitle" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <scene>
+        <Scene>
+            <root>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                    <GridPane>
+                        <columnConstraints>
+                            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES"/>
+                            <ColumnConstraints hgrow="SOMETIMES"/>
+                            <ColumnConstraints halignment="CENTER"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <children>
+                            <Label fx:id="expectedPlaintextLabel" text="%expectedPlaintextLabelText"
+                                   GridPane.rowIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </Label>
+                            <Label fx:id="ciphertextLabel" text="%ciphertextLabelText" GridPane.rowIndex="2">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </Label>
+                            <Label fx:id="startMsLabel" text="%startMsLabelText" GridPane.rowIndex="3">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </Label>
+                            <Label fx:id="stopMsLabel" text="%stopMsLabelText" GridPane.rowIndex="4">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </Label>
+                            <Label fx:id="keyDepthLabel" text="%keyDepthLabelText" GridPane.rowIndex="5">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </Label>
+                            <TextField fx:id="expectedPlaintextTextField" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="1">
+                                <tooltip>
+                                    <Tooltip fx:id="expectedPlaintextTextFieldToolTip"
+                                             text="%expectedPlaintextTextFieldToolTipText">
+                                        <graphic>
+                                            <FontIcon iconColor="white" iconLiteral="bi-info-square-fill"
+                                                      iconSize="16"/>
+                                        </graphic>
+                                    </Tooltip>
+                                </tooltip>
+                                <GridPane.margin>
+                                    <Insets left="8.0" right="8.0"/>
+                                </GridPane.margin>
+                            </TextField>
+                            <TextField fx:id="ciphertextTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <tooltip>
+                                    <Tooltip fx:id="ciphertextTextFieldToolTip" text="%ciphertextTextFieldToolTipText">
+                                        <graphic>
+                                            <FontIcon iconColor="white" iconLiteral="bi-info-square-fill"
+                                                      iconSize="16"/>
+                                        </graphic>
+                                    </Tooltip>
+                                </tooltip>
+                                <GridPane.margin>
+                                    <Insets left="8.0" right="8.0"/>
+                                </GridPane.margin>
+                            </TextField>
+                            <TextField fx:id="startMsTextField" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                <tooltip>
+                                    <Tooltip fx:id="startMsTextFieldToolTip" text="%startMsTextFieldToolTipText">
+                                        <graphic>
+                                            <FontIcon iconColor="white" iconLiteral="bi-info-square-fill"
+                                                      iconSize="16"/>
+                                        </graphic>
+                                    </Tooltip>
+                                </tooltip>
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </TextField>
+                            <TextField fx:id="stopMsTextField" text="8192" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="4">
+                                <tooltip>
+                                    <Tooltip fx:id="stopMsTextFieldToolTip" text="%stopMsTextFieldToolTipText">
+                                        <graphic>
+                                            <FontIcon iconColor="white" iconLiteral="bi-info-square-fill"
+                                                      iconSize="16"/>
+                                        </graphic>
+                                    </Tooltip>
+                                </tooltip>
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </TextField>
+                            <TextField fx:id="keyDepthTextField" text="8192" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="5">
+                                <tooltip>
+                                    <Tooltip fx:id="keyDepthTextFieldToolTip" text="%keyDepthTextFieldToolTipText">
+                                        <graphic>
+                                            <FontIcon iconColor="white" iconLiteral="bi-info-square-fill"
+                                                      iconSize="16"/>
+                                        </graphic>
+                                    </Tooltip>
+                                </tooltip>
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </TextField>
+                            <Button fx:id="bruteforceButton" disable="true" mnemonicParsing="false"
+                                    text="%bruteforceButtonText" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
+                                    GridPane.rowIndex="6">
+                                <graphic>
+                                    <FontIcon iconLiteral="bi-hammer"/>
+                                </graphic>
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </Button>
+                            <ComboBox fx:id="bruteforcePresetsComboBox"
+                                      promptText="%bruteforcePresetsComboBoxPromptText" GridPane.columnIndex="1"
+                                      GridPane.halignment="RIGHT">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </ComboBox>
+                            <FontIcon iconColor="#444444" iconLiteral="bi-gear" GridPane.columnIndex="2">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </FontIcon>
+                            <FontIcon fx:id="expectedPlaintextIcon" iconColor="#990000" iconLiteral="bi-x-square"
+                                      GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </FontIcon>
+                            <FontIcon fx:id="ciphertextIcon" iconColor="#990000" iconLiteral="bi-x-square"
+                                      GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </FontIcon>
+                            <FontIcon fx:id="startMsIcon" iconColor="#009900" iconLiteral="bi-check-square"
+                                      GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </FontIcon>
+                            <FontIcon fx:id="stopMsIcon" iconColor="#009900" iconLiteral="bi-check-square"
+                                      GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </FontIcon>
+                            <FontIcon fx:id="keyDepthIcon" iconColor="#009900" iconLiteral="bi-check-square"
+                                      GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </FontIcon>
+                            <Button fx:id="cancelButton" disable="true" mnemonicParsing="false" GridPane.columnIndex="2"
+                                    GridPane.rowIndex="6">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                                <graphic>
+                                    <FontIcon iconColor="#990000" iconLiteral="bi-x-circle"/>
+                                </graphic>
+                            </Button>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        </VBox.margin>
+                    </GridPane>
+                    <GridPane>
+                        <columnConstraints>
+                            <ColumnConstraints/>
+                            <ColumnConstraints hgrow="SOMETIMES"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <children>
+                            <ProgressBar maxWidth="1.7976931348623157E308" progress="0.0" GridPane.columnIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                                <opaqueInsets>
+                                    <Insets/>
+                                </opaqueInsets>
+                            </ProgressBar>
+                            <Label fx:id="stopwatchLabel">
+                                <graphic>
+                                    <FontIcon iconLiteral="bi-stopwatch"/>
+                                </graphic>
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </Label>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        </VBox.margin>
+                    </GridPane>
+                    <GridPane>
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES"/>
+                            <ColumnConstraints hgrow="SOMETIMES"/>
+                            <ColumnConstraints halignment="CENTER"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <children>
+                            <TextField fx:id="bruteforcedKeyTextField" editable="false"
+                                       promptText="%bruteforcedKeyTextFieldPromptText" GridPane.columnIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                            </TextField>
+                            <Label fx:id="bruteforcedKeyLabel" contentDisplay="RIGHT" text="%bruteforcedKeyLabelText">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                                <graphic>
+                                    <FontIcon iconColor="#999900" iconLiteral="bi-key"/>
+                                </graphic>
+                            </Label>
+                            <Button fx:id="copyButton" mnemonicParsing="false" GridPane.columnIndex="2">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </GridPane.margin>
+                                <graphic>
+                                    <FontIcon iconLiteral="bi-files"/>
+                                </graphic>
+                            </Button>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        </VBox.margin>
+                    </GridPane>
+                </VBox>
+            </root>
+        </Scene>
+    </scene>
+</Stage>

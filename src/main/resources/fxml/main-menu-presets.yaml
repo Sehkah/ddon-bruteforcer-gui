@@ -1,0 +1,12 @@
+stream61session1login:
+  expectedPlaintext: 010000023400000000
+  ciphertext: F136F3392042F4CF3BF6B9CD6D79DF94
+  startMs: 4921
+  stopMs: 4921
+  keyDepth: 1685
+stream61session1serverSelect:
+  expectedPlaintext: 2C0000023400000000
+  ciphertext: EAFA5971990DE6F471DCC66A480B01FF
+  startMs: 4921
+  stopMs: 4921
+  keyDepth: 2076

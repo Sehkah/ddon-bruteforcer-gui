@@ -1,6 +1,7 @@
 package org.sehkah.ddonbruteforcergui.prng;
 
 import org.junit.jupiter.api.Test;
+import org.sehkah.ddonbruteforcergui.model.crypto.SeededXorshift128;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

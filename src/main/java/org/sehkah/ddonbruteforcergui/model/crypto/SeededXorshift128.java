@@ -1,4 +1,4 @@
-package org.sehkah.ddonbruteforcergui.prng;
+package org.sehkah.ddonbruteforcergui.model.crypto;
 
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
