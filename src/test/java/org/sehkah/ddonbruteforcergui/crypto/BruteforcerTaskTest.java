@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.sehkah.ddonbruteforcergui.model.crypto.BruteforceTask;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class BruteforcerTaskTest {
     /**
@@ -107,7 +108,7 @@ class BruteforcerTaskTest {
      */
     @Test
     void testBruteforceStream85Session1ServerSelect() {
-        String key = new BruteforceTask(4990,  5204 + 32 + 1, Hex.decode("179522096dfda401fa4183a4c6b6058b"), Hex.decode("2C0000023400000000")).bruteforce().getKey();
+        String key = new BruteforceTask(4990, 5204 + 32 + 1, Hex.decode("179522096dfda401fa4183a4c6b6058b"), Hex.decode("2C0000023400000000")).bruteforce().getKey();
         assertEquals("N5ee3Ra0KBZ-UVELDmKRnhe8wqWvWEm7", key);
     }
 
@@ -134,7 +135,7 @@ class BruteforcerTaskTest {
      */
     @Test
     void testBruteforceStream86ServerSelect() {
-        String key = new BruteforceTask(5025,  4097 + 32 + 1, Hex.decode("CBEB0B9002CF91C114688035892F282C"), Hex.decode("2C0000023400000000")).bruteforce().getKey();
+        String key = new BruteforceTask(5025, 4097 + 32 + 1, Hex.decode("CBEB0B9002CF91C114688035892F282C"), Hex.decode("2C0000023400000000")).bruteforce().getKey();
         assertEquals("E-pksmlfoN6r3_TIBDUPdjpB9gVFZQzu", key);
     }
 
