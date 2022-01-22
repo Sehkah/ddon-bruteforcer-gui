@@ -30,6 +30,7 @@ class BruteforcerTaskTest {
      * TODO: not reproducible -> nothilvien#1337
      */
     @Test
+    @Disabled
     void testBruteforceStream61Session1Game() {
         String key = new BruteforceTask(4921, 2500, Hex.decode("FA170821EF6FFC19BCE4A82E63EC9208"), Hex.decode("000005010000000000")).bruteforce().getKey();
         assertEquals("q9p2wKk5jOiYuCkqT0nN6giLQa-qTmuz", key);
