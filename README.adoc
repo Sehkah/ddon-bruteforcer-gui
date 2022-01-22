@@ -34,7 +34,7 @@ This is currently the only IDE the source code has been tested with.
 
 This DLL is a custom build based on the source code provided here: https://github.com/Andoryuuta/ddon_common_key_bruteforce/blob/main/src/seeded_xorshift_128.hpp[seeded_xorshift_128.hpp]
 
-There is a Visual Studio-based solution available here: TODO
+There is a Visual Studio-based solution available here: https://github.com/Sehkah/SeededXorshift128
 
 == How to build
 
