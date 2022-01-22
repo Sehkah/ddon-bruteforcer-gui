@@ -88,6 +88,10 @@ public class MainMenuViewImpl implements MainMenuView {
             setupListeners();
             setupData();
             this.stage.centerOnScreen();
+            this.stage.setOnCloseRequest(e -> {
+                logger.debug("close request");
+                controller.handleCloseRequest();
+            });
             this.stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -237,9 +241,10 @@ public class MainMenuViewImpl implements MainMenuView {
             int keyDepth = Integer.parseInt(keyDepthTextField.getText());
             bruteforceButton.setDisable(true);
             cancelButton.setDisable(false);
+            progressbar.setProgress(0);
             try {
-                logger.debug("bruteforcing: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
-                controller.bruteforce(startMs, stopMs, keyDepth, ciphertext, expectedPlaintext);
+                logger.debug("triggered bruteforcing: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
+                controller.handleBruteforceRequest(startMs, stopMs, keyDepth, ciphertext, expectedPlaintext);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -256,6 +261,7 @@ public class MainMenuViewImpl implements MainMenuView {
         cancelButton.setOnAction(event -> {
             bruteforceButton.setDisable(false);
             cancelButton.setDisable(true);
+            controller.handleCancelRequest();
         });
     }
 
@@ -266,6 +272,12 @@ public class MainMenuViewImpl implements MainMenuView {
 
     @Override
     public void setBruteforcedKey(String key) {
+        logger.debug("setBruteforcedKey -> {}", key);
         bruteforcedKeyTextField.setText(key);
+    }
+
+    @Override
+    public void updateProgress(double progress) {
+        progressbar.setProgress(progress);
     }
 }

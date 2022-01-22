@@ -26,7 +26,17 @@ public class MainMenuControllerImpl implements MainMenuController {
     }
 
     @Override
-    public void bruteforce(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
+    public void handleBruteforceRequest(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
         model.bruteforce(startMs, stopMs, keyDepth, ciphertext, expectedPlaintext);
+    }
+
+    @Override
+    public void handleCloseRequest() {
+        model.close();
+    }
+
+    @Override
+    public void handleCancelRequest() {
+        model.cancel();
     }
 }

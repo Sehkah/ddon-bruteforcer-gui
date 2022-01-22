@@ -12,6 +12,4 @@ public interface MainMenuView extends View {
     default void queueTaskThreadSafe(Runnable r) {
         Platform.runLater(r);
     }
-
-    void setBruteforcedKey(String key);
 }

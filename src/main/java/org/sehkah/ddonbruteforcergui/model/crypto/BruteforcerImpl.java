@@ -6,27 +6,45 @@ import org.bouncycastle.util.encoders.Hex;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class BruteforcerImpl implements Bruteforcer {
     private static final Logger logger = LogManager.getLogger();
-    private final ExecutorService executor;
     private final List<Bruteforcer.BruteforceListener> bruteforceListeners;
-    private BruteforceTask bruteforceTask;
+    private ExecutorService executorService;
 
     public BruteforcerImpl() {
-        executor = Executors.newSingleThreadExecutor();
+        executorService = Executors.newSingleThreadExecutor(); // TODO: Replace with workStealingPool once DLL is rewritten
         bruteforceListeners = new LinkedList<>();
     }
 
     @Override
     public void cancel() {
-        if (bruteforceTask != null) {
-            executor.shutdownNow();
+        logger.debug("cancel requested");
+        try {
+            executorService.shutdownNow();
+            executorService.awaitTermination(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (executorService.isShutdown()) {
+            logger.debug("executor is shut down");
+            executorService = Executors.newSingleThreadExecutor();
+        }
+    }
+
+    @Override
+    public void close() {
+        logger.debug("close requested");
+        try {
+            executorService.shutdownNow();
+            executorService.awaitTermination(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -41,26 +59,52 @@ public class BruteforcerImpl implements Bruteforcer {
     }
 
     @Override
-    public void bruteforce(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
-        if (bruteforceTask != null) {
-            bruteforceTask = null;
-        }
+    public void start(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
         Instant start = Instant.now();
-        BruteforceTaskResult result = null;
+        byte[] byteCiphertext = Hex.decode(ciphertext);
+        byte[] byteExpectedPlaintext = Hex.decode(expectedPlaintext);
+        List<BruteforceTask> bruteforceTasks = new ArrayList<>(stopMs - startMs);
         for (int milliseconds = startMs; milliseconds <= stopMs; milliseconds++) {
-            bruteforceTask = new BruteforceTask(milliseconds, keyDepth, Hex.decode(ciphertext), Hex.decode(expectedPlaintext));
-            try {
-                result = (BruteforceTaskResult) executor.submit(bruteforceTask).get();
-                if (result != null) {
-                    break;
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            bruteforceTasks.add(new BruteforceTask(milliseconds, keyDepth, byteCiphertext, byteExpectedPlaintext));
+        }
+        try {
+            bruteforceAll(executorService, bruteforceTasks);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         Instant finish = Instant.now();
         final String timeElapsed = Duration.between(start, finish).toString();
-        BruteforceTaskResult finalResult = result;
+    }
+
+    private void bruteforceAll(Executor executor, Collection<BruteforceTask> tasks) throws InterruptedException {
+        CompletionService<BruteforceTaskResult> cs = new ExecutorCompletionService<>(executor);
+        int n = tasks.size();
+        List<Future<BruteforceTaskResult>> futures = new ArrayList<>(n);
+        BruteforceTaskResult result = null;
+        try {
+            tasks.forEach(solver -> futures.add(cs.submit(solver)));
+            for (int i = n; i > 0; i--) {
+                try {
+                    BruteforceTaskResult r = cs.take().get();
+                    if (r != null) {
+                        result = r;
+                        break;
+                    }
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        } finally {
+            futures.forEach(future -> future.cancel(true));
+        }
+
+        BruteforceTaskResult finalResult;
+        if (result == null || result.getKey() == null || result.getKey().isBlank()) {
+            finalResult = new BruteforceTaskResult(-1, -1, "Key not found");
+        } else {
+            finalResult = result;
+        }
+
         bruteforceListeners.forEach(bruteforceListener -> bruteforceListener.onBruteforceComplete(finalResult));
     }
 }

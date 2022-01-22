@@ -22,4 +22,13 @@ public class BruteforceTaskResult {
     public String getKey() {
         return key;
     }
+
+    @Override
+    public String toString() {
+        return "BruteforceTaskResult{" +
+                "milliseconds=" + milliseconds +
+                ", keyDepth=" + keyDepth +
+                ", key='" + key + '\'' +
+                '}';
+    }
 }

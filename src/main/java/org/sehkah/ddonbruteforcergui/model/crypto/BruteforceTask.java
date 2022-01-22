@@ -1,6 +1,5 @@
 package org.sehkah.ddonbruteforcergui.model.crypto;
 
-import javafx.concurrent.Task;
 import org.bouncycastle.crypto.engines.CamelliaEngine;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -8,8 +7,9 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import java.nio.charset.StandardCharsets;
 import java.security.Security;
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 
-public class BruteforceTask extends Task<BruteforceTaskResult> {
+public class BruteforceTask implements Callable<BruteforceTaskResult> {
     private static final byte CAMELLIA_BLOCK_SIZE = 16;
     private static final byte KEY_LENGTH = 32;
     private static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_".toCharArray();
@@ -42,7 +42,7 @@ public class BruteforceTask extends Task<BruteforceTaskResult> {
     }
 
     @Override
-    protected BruteforceTaskResult call() {
+    public BruteforceTaskResult call() {
         return bruteforce();
     }
 
@@ -58,7 +58,8 @@ public class BruteforceTask extends Task<BruteforceTaskResult> {
         byte[] plaintext = new byte[16];
         KeyParameter keyParameter;
         // Go over the key buffer and try every index as the starting position of the key.
-        for (int i = 0; i < keyDepth - KEY_LENGTH; i++) {
+        int maxDepth = keyDepth - KEY_LENGTH;
+        for (int i = 0; i < maxDepth; i++) {
             char[] key = Arrays.copyOfRange(keyBuffer, i, i + KEY_LENGTH);
             keyParameter = new KeyParameter(charToByte(key));
             engine.init(false, keyParameter);
@@ -71,7 +72,9 @@ public class BruteforceTask extends Task<BruteforceTaskResult> {
 
             // Check if the current key index decrypts to the expected LoginServer->Client packet.
             if (Arrays.equals(expectedPlaintext, Arrays.copyOfRange(plaintext, 0, expectedPlaintext.length))) {
-                return new BruteforceTaskResult(milliseconds, i, new String(key));
+                BruteforceTaskResult result = new BruteforceTaskResult(milliseconds, i, new String(key));
+                System.out.println(result);
+                return result;
             }
         }
         return null;
