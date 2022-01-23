@@ -5,6 +5,8 @@
 
 a minimal GUI for brute forcing DDON's Camellia encrypted network packets.
 
+image::docs/imgs/Sample-Screenshot.png[]
+
 '''
 
 toc::[]

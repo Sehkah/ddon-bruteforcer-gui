@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 import static org.sehkah.ddonbruteforcergui.view.util.FxmlUtil.loadFxml;
 
+// TODO sanitization and validation logic should be in the model instead
 public class MainMenuViewImpl implements MainMenuView {
     private static final Logger logger = LogManager.getLogger();
     private static final Pattern hexadecimalPattern = Pattern.compile("0x");
@@ -217,6 +218,7 @@ public class MainMenuViewImpl implements MainMenuView {
             bruteforceButton.setDisable(true);
             cancelButton.setDisable(false);
             progressbar.setProgress(0);
+            bruteforcedKeyTextField.setText("");
             try {
                 logger.debug("request bruteforcing: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
                 controller.handleBruteforceRequest(startMs, stopMs, keyDepth, ciphertext, expectedPlaintext);

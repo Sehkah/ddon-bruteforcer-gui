@@ -27,12 +27,21 @@ public class BruteforceTask implements Callable<BruteforceTaskResult> {
     private final int keyDepth;
     private final byte[] ciphertext;
     private final byte[] expectedPlaintext;
+    private Bruteforcer.BruteforceTaskListener listener;
 
     public BruteforceTask(int milliseconds, int keyDepth, byte[] ciphertext, byte[] expectedPlaintext) {
         this.milliseconds = milliseconds;
         this.keyDepth = keyDepth;
         this.ciphertext = ciphertext;
         this.expectedPlaintext = expectedPlaintext;
+    }
+
+    public BruteforceTask(int milliseconds, int keyDepth, byte[] ciphertext, byte[] expectedPlaintext, Bruteforcer.BruteforceTaskListener listener) {
+        this.milliseconds = milliseconds;
+        this.keyDepth = keyDepth;
+        this.ciphertext = ciphertext;
+        this.expectedPlaintext = expectedPlaintext;
+        this.listener = listener;
     }
 
     private static byte[] charToByte(char[] array) {
@@ -46,7 +55,12 @@ public class BruteforceTask implements Callable<BruteforceTaskResult> {
 
     @Override
     public BruteforceTaskResult call() {
-        return bruteforce();
+        BruteforceTaskResult result = bruteforce();
+        if (listener != null) {
+            listener.onBruteforceTaskComplete(result);
+        }
+        logger.trace("finished checking {}ms", milliseconds);
+        return result;
     }
 
     public BruteforceTaskResult bruteforce() {

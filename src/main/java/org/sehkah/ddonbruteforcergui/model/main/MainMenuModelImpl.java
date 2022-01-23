@@ -48,6 +48,7 @@ public class MainMenuModelImpl implements MainMenuModel, Bruteforcer.BruteforceL
             logger.debug("executor is shut down");
             executorService = Executors.newSingleThreadExecutor();
         }
+        views.forEach(v -> v.queueTaskThreadSafe(() -> v.updateProgress(0)));
     }
 
     @Override
@@ -81,6 +82,7 @@ public class MainMenuModelImpl implements MainMenuModel, Bruteforcer.BruteforceL
     @Override
     public void onBruteforceComplete(BruteforceTaskResult result) {
         views.forEach(v -> v.queueTaskThreadSafe(() -> v.setBruteforcedKey(result.getKey())));
+        views.forEach(v -> v.queueTaskThreadSafe(() -> v.updateProgress(1)));
     }
 
     private double scaleTo1(double oldMin, double oldMax, double value) {

@@ -4,18 +4,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.encoders.Hex;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class BruteforcerImpl implements Bruteforcer {
+public class BruteforcerImpl implements Bruteforcer, Bruteforcer.BruteforceTaskListener {
     private static final Logger logger = LogManager.getLogger();
     private final List<Bruteforcer.BruteforceListener> bruteforceListeners;
     private ExecutorService executorService;
+    private int progress;
 
     public BruteforcerImpl() {
         executorService = Executors.newSingleThreadExecutor(); // TODO: Replace with workStealingPool once DLL is rewritten
@@ -61,20 +60,18 @@ public class BruteforcerImpl implements Bruteforcer {
     @Override
     public void start(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
         logger.debug("bruteforce requested: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
-        Instant start = Instant.now();
+        bruteforceListeners.forEach(bruteforceListener -> bruteforceListener.onBruteforceProgressUpdate(0));
         byte[] byteCiphertext = Hex.decode(ciphertext);
         byte[] byteExpectedPlaintext = Hex.decode(expectedPlaintext);
         List<BruteforceTask> bruteforceTasks = new ArrayList<>(stopMs - startMs);
         for (int milliseconds = startMs; milliseconds <= stopMs; milliseconds++) {
-            bruteforceTasks.add(new BruteforceTask(milliseconds, keyDepth, byteCiphertext, byteExpectedPlaintext));
+            bruteforceTasks.add(new BruteforceTask(milliseconds, keyDepth, byteCiphertext, byteExpectedPlaintext, this));
         }
         try {
             bruteforceAll(executorService, bruteforceTasks);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Instant finish = Instant.now();
-        final String timeElapsed = Duration.between(start, finish).toString();
     }
 
     private void bruteforceAll(Executor executor, Collection<BruteforceTask> tasks) throws InterruptedException {
@@ -107,5 +104,10 @@ public class BruteforcerImpl implements Bruteforcer {
         }
 
         bruteforceListeners.forEach(bruteforceListener -> bruteforceListener.onBruteforceComplete(finalResult));
+    }
+
+    @Override
+    public void onBruteforceTaskComplete(BruteforceTaskResult result) {
+        bruteforceListeners.forEach(bruteforceListener -> bruteforceListener.onBruteforceProgressUpdate(++progress));
     }
 }
