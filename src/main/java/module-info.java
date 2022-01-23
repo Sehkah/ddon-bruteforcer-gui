@@ -21,4 +21,5 @@ module org.sehkah.ddonbruteforcergui {
     exports org.sehkah.ddonbruteforcergui to javafx.graphics;
     exports org.sehkah.ddonbruteforcergui.view.main to javafx.fxml, com.fasterxml.jackson.databind;
     exports org.sehkah.ddonbruteforcergui.controller.main to javafx.fxml;
+    exports org.sehkah.ddonbruteforcergui.model.pcap to com.fasterxml.jackson.databind;
 }

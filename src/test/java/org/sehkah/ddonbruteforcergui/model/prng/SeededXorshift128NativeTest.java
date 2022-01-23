@@ -1,4 +1,4 @@
-package org.sehkah.ddonbruteforcergui.prng;
+package org.sehkah.ddonbruteforcergui.model.prng;
 
 import org.junit.jupiter.api.Test;
 import org.sehkah.ddonbruteforcergui.model.crypto.SeededXorshift128;

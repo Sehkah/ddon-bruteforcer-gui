@@ -1,10 +1,8 @@
-package org.sehkah.ddonbruteforcergui.crypto;
+package org.sehkah.ddonbruteforcergui.model.crypto;
 
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.sehkah.ddonbruteforcergui.model.crypto.BruteforceTask;
-import org.sehkah.ddonbruteforcergui.model.crypto.BruteforceTaskResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

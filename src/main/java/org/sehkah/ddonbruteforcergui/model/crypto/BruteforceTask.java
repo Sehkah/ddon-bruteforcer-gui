@@ -6,21 +6,18 @@ import org.bouncycastle.crypto.engines.CamelliaEngine;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Security;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
+import static org.sehkah.ddonbruteforcergui.model.crypto.CamelliaConstants.*;
+
 public class BruteforceTask implements Callable<BruteforceTaskResult> {
     private static final Logger logger = LogManager.getLogger();
-    private static final byte CAMELLIA_BLOCK_SIZE = 16;
-    private static final byte KEY_LENGTH = 32;
-    private static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_".toCharArray();
-    private static final byte[] camellia_default_iv = "$cbM6WP)aX=%J^zA".getBytes(StandardCharsets.UTF_8);
     private static final CamelliaEngine engine = new CamelliaEngine();
 
     static {
-        Security.addProvider(new BouncyCastleProvider());
+        Security.insertProviderAt(new BouncyCastleProvider(), 0);
     }
 
     private final int milliseconds;
@@ -69,7 +66,7 @@ public class BruteforceTask implements Callable<BruteforceTaskResult> {
         char[] keyBuffer = new char[keyDepth + KEY_LENGTH];
         // Initialize PRNG with the current ms time, then generate the full potential key buffer.
         for (int i = 0; i < keyDepth + KEY_LENGTH; i++) {
-            keyBuffer[i] = alphabet[(int) (SeededXorshift128.nextRand() & 63)];
+            keyBuffer[i] = ALPHABET[(int) (SeededXorshift128.nextRand() & 63)];
         }
 
         byte[] plaintext = new byte[16];
@@ -83,7 +80,7 @@ public class BruteforceTask implements Callable<BruteforceTaskResult> {
 
             // XOR output with the provided IV.
             for (int j = 0; j < CAMELLIA_BLOCK_SIZE; j++) {
-                plaintext[j] ^= camellia_default_iv[j];
+                plaintext[j] ^= CAMELLIA_DEFAULT_IV[j];
             }
 
             // Check if the current key index decrypts to the expected LoginServer->Client packet.
