@@ -124,64 +124,49 @@ public class MainMenuViewImpl implements MainMenuView {
             keyDepthTextField.setText(preset.getKeyDepth());
         });
         expectedPlaintextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String expectedPlaintext = sanitizeInput(newValue);
+            String expectedPlaintext = sanitizeByteInput(newValue);
             if (expectedPlaintext.length() < 8 || expectedPlaintext.length() > 32) {
-                expectedPlaintextIcon.setIconLiteral("bi-x-square");
-                expectedPlaintextIcon.setIconColor(Color.web("#990000"));
+                setIconInvalid(expectedPlaintextIcon);
                 expectedPlaintextTextFieldIsValid = false;
                 bruteforceButton.setDisable(true);
             } else {
-                expectedPlaintextIcon.setIconLiteral("bi-check-square");
-                expectedPlaintextIcon.setIconColor(Color.web("#009900"));
+                setIconValid(expectedPlaintextIcon);
                 expectedPlaintextTextFieldIsValid = true;
-                if (!List.of(ciphertextTextFieldIsValid, startMsTextFieldIsValid, stopMsTextFieldIsValid, keyDepthTextFieldIsValid).contains(false)) {
-                    bruteforceButton.setDisable(false);
-                }
+                validateBruteforceButton();
             }
         });
         ciphertextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String ciphertext = sanitizeInput(newValue);
+            String ciphertext = sanitizeByteInput(newValue);
             if (ciphertext.length() != 32) {
-                ciphertextIcon.setIconLiteral("bi-x-square");
-                ciphertextIcon.setIconColor(Color.web("#990000"));
+                setIconInvalid(ciphertextIcon);
                 ciphertextTextFieldIsValid = false;
                 bruteforceButton.setDisable(true);
             } else {
-                ciphertextIcon.setIconLiteral("bi-check-square");
-                ciphertextIcon.setIconColor(Color.web("#009900"));
+                setIconValid(ciphertextIcon);
                 ciphertextTextFieldIsValid = true;
-                if (!List.of(expectedPlaintextTextFieldIsValid, startMsTextFieldIsValid, stopMsTextFieldIsValid, keyDepthTextFieldIsValid).contains(false)) {
-                    bruteforceButton.setDisable(false);
-                }
+                validateBruteforceButton();
             }
         });
         startMsTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 long start = Integer.parseInt(whitespacePattern.matcher(newValue).replaceAll(""));
                 if (start < 0) {
-                    startMsIcon.setIconLiteral("bi-x-square");
-                    startMsIcon.setIconColor(Color.web("#990000"));
+                    setIconInvalid(startMsIcon);
                     startMsTextFieldIsValid = false;
                     bruteforceButton.setDisable(true);
                 } else {
-                    startMsIcon.setIconLiteral("bi-check-square");
-                    startMsIcon.setIconColor(Color.web("#009900"));
+                    setIconValid(startMsIcon);
                     startMsTextFieldIsValid = true;
+
+                    // Check on relationship with stopMs
                     long stop = Integer.parseInt(whitespacePattern.matcher(stopMsTextField.getText()).replaceAll(""));
                     if (start > stop) {
                         stopMsTextField.textProperty().set(newValue);
-                        stopMsTextFieldIsValid = true;
-                    } else {
-                        stopMsTextField.getStyleClass().set(1, null);
-                        stopMsTextFieldIsValid = true;
                     }
-                    if (!List.of(expectedPlaintextTextFieldIsValid, ciphertextTextFieldIsValid, keyDepthTextFieldIsValid).contains(false)) {
-                        bruteforceButton.setDisable(false);
-                    }
+                    validateBruteforceButton();
                 }
             } catch (NumberFormatException e) {
-                startMsIcon.setIconLiteral("bi-x-square");
-                startMsIcon.setIconColor(Color.web("#990000"));
+                setIconInvalid(startMsIcon);
                 startMsTextFieldIsValid = false;
                 bruteforceButton.setDisable(true);
             }
@@ -191,21 +176,16 @@ public class MainMenuViewImpl implements MainMenuView {
                 long stop = Integer.parseInt(whitespacePattern.matcher(newValue).replaceAll(""));
                 long start = Integer.parseInt(whitespacePattern.matcher(startMsTextField.getText()).replaceAll(""));
                 if (stop < 0 || stop < start) {
-                    stopMsIcon.setIconLiteral("bi-x-square");
-                    stopMsIcon.setIconColor(Color.web("#990000"));
+                    setIconInvalid(stopMsIcon);
                     stopMsTextFieldIsValid = false;
                     bruteforceButton.setDisable(true);
                 } else {
-                    stopMsIcon.setIconLiteral("bi-check-square");
-                    stopMsIcon.setIconColor(Color.web("#009900"));
+                    setIconValid(stopMsIcon);
                     stopMsTextFieldIsValid = true;
-                    if (!List.of(expectedPlaintextTextFieldIsValid, ciphertextTextFieldIsValid, startMsTextFieldIsValid, keyDepthTextFieldIsValid).contains(false)) {
-                        bruteforceButton.setDisable(false);
-                    }
+                    validateBruteforceButton();
                 }
             } catch (NumberFormatException e) {
-                stopMsIcon.setIconLiteral("bi-x-square");
-                stopMsIcon.setIconColor(Color.web("#990000"));
+                setIconInvalid(stopMsIcon);
                 stopMsTextFieldIsValid = false;
                 bruteforceButton.setDisable(true);
             }
@@ -214,28 +194,23 @@ public class MainMenuViewImpl implements MainMenuView {
             try {
                 long keyDepth = Integer.parseInt(whitespacePattern.matcher(newValue).replaceAll(""));
                 if (keyDepth < 1) {
-                    keyDepthIcon.setIconLiteral("bi-x-square");
-                    keyDepthIcon.setIconColor(Color.web("#990000"));
+                    setIconInvalid(keyDepthIcon);
                     keyDepthTextFieldIsValid = false;
                     bruteforceButton.setDisable(true);
                 } else {
-                    keyDepthIcon.setIconLiteral("bi-check-square");
-                    keyDepthIcon.setIconColor(Color.web("#009900"));
+                    setIconValid(keyDepthIcon);
                     keyDepthTextFieldIsValid = true;
-                    if (!List.of(expectedPlaintextTextFieldIsValid, ciphertextTextFieldIsValid, startMsTextFieldIsValid, stopMsTextFieldIsValid).contains(false)) {
-                        bruteforceButton.setDisable(false);
-                    }
+                    validateBruteforceButton();
                 }
             } catch (NumberFormatException e) {
-                keyDepthIcon.setIconLiteral("bi-check-square");
-                keyDepthIcon.setIconColor(Color.web("#009900"));
+                setIconInvalid(keyDepthIcon);
                 keyDepthTextFieldIsValid = false;
                 bruteforceButton.setDisable(true);
             }
         });
         bruteforceButton.setOnAction(event -> {
-            String expectedPlaintext = sanitizeInput(expectedPlaintextTextField.getText());
-            String ciphertext = sanitizeInput(ciphertextTextField.getText());
+            String expectedPlaintext = sanitizeByteInput(expectedPlaintextTextField.getText());
+            String ciphertext = sanitizeByteInput(ciphertextTextField.getText());
             int startMs = Integer.parseInt(startMsTextField.getText());
             int stopMs = Integer.parseInt(stopMsTextField.getText());
             int keyDepth = Integer.parseInt(keyDepthTextField.getText());
@@ -265,7 +240,24 @@ public class MainMenuViewImpl implements MainMenuView {
         });
     }
 
-    private String sanitizeInput(String input) {
+    private void validateBruteforceButton() {
+        if (List.of(expectedPlaintextTextFieldIsValid, ciphertextTextFieldIsValid, startMsTextFieldIsValid, stopMsTextFieldIsValid, keyDepthTextFieldIsValid).contains(false)) {
+            return;
+        }
+        bruteforceButton.setDisable(false);
+    }
+
+    private void setIconValid(FontIcon icon) {
+        icon.setIconLiteral("bi-check-square");
+        icon.setIconColor(Color.web("#009900"));
+    }
+
+    private void setIconInvalid(FontIcon icon) {
+        icon.setIconLiteral("bi-x-square");
+        icon.setIconColor(Color.web("#990000"));
+    }
+
+    private String sanitizeByteInput(String input) {
         String sanitizedInput = input;
         sanitizedInput = hexadecimalPattern.matcher(sanitizedInput).replaceAll("");
         sanitizedInput = whitespacePattern.matcher(sanitizedInput).replaceAll("");
