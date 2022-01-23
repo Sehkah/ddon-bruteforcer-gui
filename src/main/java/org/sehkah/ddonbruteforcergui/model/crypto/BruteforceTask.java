@@ -1,5 +1,7 @@
 package org.sehkah.ddonbruteforcergui.model.crypto;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bouncycastle.crypto.engines.CamelliaEngine;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -10,6 +12,7 @@ import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 public class BruteforceTask implements Callable<BruteforceTaskResult> {
+    private static final Logger logger = LogManager.getLogger();
     private static final byte CAMELLIA_BLOCK_SIZE = 16;
     private static final byte KEY_LENGTH = 32;
     private static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_".toCharArray();
@@ -49,17 +52,16 @@ public class BruteforceTask implements Callable<BruteforceTaskResult> {
     public BruteforceTaskResult bruteforce() {
         SeededXorshift128.init(milliseconds);
 
-        char[] keyBuffer = new char[keyDepth];
+        char[] keyBuffer = new char[keyDepth + KEY_LENGTH];
         // Initialize PRNG with the current ms time, then generate the full potential key buffer.
-        for (int i = 0; i < keyDepth; i++) {
+        for (int i = 0; i < keyDepth + KEY_LENGTH; i++) {
             keyBuffer[i] = alphabet[(int) (SeededXorshift128.nextRand() & 63)];
         }
 
         byte[] plaintext = new byte[16];
         KeyParameter keyParameter;
         // Go over the key buffer and try every index as the starting position of the key.
-        int maxDepth = keyDepth - KEY_LENGTH;
-        for (int i = 0; i < maxDepth; i++) {
+        for (int i = 0; i <= keyDepth; i++) {
             char[] key = Arrays.copyOfRange(keyBuffer, i, i + KEY_LENGTH);
             keyParameter = new KeyParameter(charToByte(key));
             engine.init(false, keyParameter);
@@ -73,7 +75,7 @@ public class BruteforceTask implements Callable<BruteforceTaskResult> {
             // Check if the current key index decrypts to the expected LoginServer->Client packet.
             if (Arrays.equals(expectedPlaintext, Arrays.copyOfRange(plaintext, 0, expectedPlaintext.length))) {
                 BruteforceTaskResult result = new BruteforceTaskResult(milliseconds, i, new String(key));
-                System.out.println(result);
+                logger.info(result);
                 return result;
             }
         }
