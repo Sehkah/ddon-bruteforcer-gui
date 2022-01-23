@@ -9,15 +9,14 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.sehkah.ddonbruteforcergui.controller.main.MainMenuController;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -84,7 +83,7 @@ public class MainMenuViewImpl implements MainMenuView {
     public void start(Stage stage) {
         logger.debug("Starting stage");
         try {
-            this.stage = loadFxml("main-menu.fxml", this);
+            this.stage = loadFxml("main-menu.fxml", "i18n/main-menu", this);
             setupListeners();
             setupData();
             this.stage.centerOnScreen();
@@ -100,16 +99,15 @@ public class MainMenuViewImpl implements MainMenuView {
     }
 
     private void setupData() {
+        logger.debug("Attempting to load main menu presets");
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
         try {
-            TypeReference<Map<String, MainMenuPreset>> typeReference = new TypeReference<>() {
-            };
-            presets = mapper.readValue(Files.readString(Paths.get(getClass().getClassLoader().getResource("fxml/main-menu-presets.yaml").toURI())), typeReference);
+            String presetsContent = IOUtils.toString(ClassLoader.getSystemClassLoader().getResource("main-menu-presets.yaml"), StandardCharsets.UTF_8);
+            presets = mapper.readValue(presetsContent, new TypeReference<>() {
+            });
             presets.keySet().forEach(preset -> bruteforcePresetsComboBox.getItems().add(preset));
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }

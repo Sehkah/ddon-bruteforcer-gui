@@ -28,6 +28,8 @@ javafx {
 dependencies {
     // https://mvnrepository.com/artifact/net.java.dev.jna/jna
     implementation group: 'net.java.dev.jna', name: 'jna', version: '5.10.0'
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.17.1'
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.17.1
@@ -37,7 +39,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx
     implementation group: 'org.kordamp.ikonli', name: 'ikonli-javafx', version: '12.3.0'
     // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-bootstrapicons-pack/12.3.0
-    implementation group: 'org.kordamp.ikonli', name: 'ikonli-bootstrapicons-pack', version: '12.3.0'
+    runtimeOnly group: 'org.kordamp.ikonli', name: 'ikonli-bootstrapicons-pack', version: '12.3.0'
     // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.70'
 

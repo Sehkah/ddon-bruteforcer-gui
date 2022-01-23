@@ -10,6 +10,7 @@ module org.sehkah.ddonbruteforcergui {
     requires com.fasterxml.jackson.dataformat.yaml;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.commons.io;
 
     opens org.sehkah.ddonbruteforcergui.view.main to javafx.fxml;
     exports org.sehkah.ddonbruteforcergui to javafx.graphics;

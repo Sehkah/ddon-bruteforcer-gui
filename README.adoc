@@ -59,3 +59,15 @@ To trigger a native image build the following Gradle command suffices:
 ....
 ./gradlew jpackage
 ....
+
+== How to run
+
+=== Gradle
+
+....
+./gradlew run
+....
+
+=== Native images
+
+Directly run the executable.

@@ -9,34 +9,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class FxmlUtil {
     private static final Logger logger = LogManager.getLogger();
 
-    public static <T> T loadFxml(String fxmlName) throws IOException {
-        return loadFxml(fxmlName, null, Locale.getDefault());
+    public static <T> T loadFxml(String fxmlName, String i18nName) throws IOException {
+        return loadFxml(fxmlName, i18nName, null, Locale.getDefault());
     }
 
-    public static <T> T loadFxml(String fxmlName, Locale locale) throws IOException {
-        return loadFxml(fxmlName, null, locale);
+    public static <T> T loadFxml(String fxmlName, String i18nName, Object controller) throws IOException {
+        return loadFxml(fxmlName, i18nName, controller, Locale.getDefault());
     }
 
-    public static <T> T loadFxml(String fxmlName, Object controller) throws IOException {
-        return loadFxml(fxmlName, controller, Locale.ENGLISH);
-    }
-
-    public static <T> T loadFxml(String fxmlName, Object controller, Locale locale) throws IOException {
-        URL resourceLocation = FXMLLoader.getDefaultClassLoader().getResource("fxml/" + fxmlName);
+    public static <T> T loadFxml(String fxmlName, String i18nName, Object controller, Locale locale) throws IOException {
+        logger.debug("Attempting to load fxml {} with locale {}", fxmlName, locale);
+        URL resourceLocation = ClassLoader.getSystemClassLoader().getResource(fxmlName);
         FXMLLoader fxmlLoader = new FXMLLoader(resourceLocation);
-        fxmlLoader.setResources(ResourceBundle.getBundle("i18n." + fxmlName.substring(0, fxmlName.indexOf('.')), locale));
+        fxmlLoader.setResources(ResourceBundle.getBundle(i18nName, locale));
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
         if (controller != null) {
             fxmlLoader.setController(controller);
         }
         logger.debug("Loading FXML from location: {}", resourceLocation);
         T root;
-        try (InputStream in = resourceLocation.openStream()) {
+        try (InputStream in = Objects.requireNonNull(resourceLocation).openStream()) {
             root = fxmlLoader.load(in);
         }
         return root;
