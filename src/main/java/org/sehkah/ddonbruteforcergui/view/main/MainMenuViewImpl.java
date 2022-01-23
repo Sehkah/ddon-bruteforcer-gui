@@ -274,6 +274,8 @@ public class MainMenuViewImpl implements MainMenuView {
     public void setBruteforcedKey(String key) {
         logger.debug("setBruteforcedKey -> {}", key);
         bruteforcedKeyTextField.setText(key);
+        bruteforceButton.setDisable(false);
+        cancelButton.setDisable(true);
     }
 
     @Override
