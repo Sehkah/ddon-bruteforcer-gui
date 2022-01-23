@@ -25,7 +25,9 @@ import static org.sehkah.ddonbruteforcergui.view.util.FxmlUtil.loadFxml;
 
 public class MainMenuViewImpl implements MainMenuView {
     private static final Logger logger = LogManager.getLogger();
+    private static final Pattern hexadecimalPattern = Pattern.compile("0x");
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
+    private static final Pattern commaPattern = Pattern.compile(",");
 
     @FXML
     private ComboBox<String> bruteforcePresetsComboBox;
@@ -122,7 +124,7 @@ public class MainMenuViewImpl implements MainMenuView {
             keyDepthTextField.setText(preset.getKeyDepth());
         });
         expectedPlaintextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String expectedPlaintext = whitespacePattern.matcher(newValue).replaceAll("");
+            String expectedPlaintext = sanitizeInput(newValue);
             if (expectedPlaintext.length() < 8 || expectedPlaintext.length() > 32) {
                 expectedPlaintextIcon.setIconLiteral("bi-x-square");
                 expectedPlaintextIcon.setIconColor(Color.web("#990000"));
@@ -138,7 +140,7 @@ public class MainMenuViewImpl implements MainMenuView {
             }
         });
         ciphertextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String ciphertext = whitespacePattern.matcher(newValue).replaceAll("");
+            String ciphertext = sanitizeInput(newValue);
             if (ciphertext.length() != 32) {
                 ciphertextIcon.setIconLiteral("bi-x-square");
                 ciphertextIcon.setIconColor(Color.web("#990000"));
@@ -232,8 +234,8 @@ public class MainMenuViewImpl implements MainMenuView {
             }
         });
         bruteforceButton.setOnAction(event -> {
-            String expectedPlaintext = expectedPlaintextTextField.getText();
-            String ciphertext = ciphertextTextField.getText();
+            String expectedPlaintext = sanitizeInput(expectedPlaintextTextField.getText());
+            String ciphertext = sanitizeInput(ciphertextTextField.getText());
             int startMs = Integer.parseInt(startMsTextField.getText());
             int stopMs = Integer.parseInt(stopMsTextField.getText());
             int keyDepth = Integer.parseInt(keyDepthTextField.getText());
@@ -241,7 +243,7 @@ public class MainMenuViewImpl implements MainMenuView {
             cancelButton.setDisable(false);
             progressbar.setProgress(0);
             try {
-                logger.debug("triggered bruteforcing: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
+                logger.debug("request bruteforcing: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
                 controller.handleBruteforceRequest(startMs, stopMs, keyDepth, ciphertext, expectedPlaintext);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -261,6 +263,14 @@ public class MainMenuViewImpl implements MainMenuView {
             cancelButton.setDisable(true);
             controller.handleCancelRequest();
         });
+    }
+
+    private String sanitizeInput(String input) {
+        String sanitizedInput = input;
+        sanitizedInput = hexadecimalPattern.matcher(sanitizedInput).replaceAll("");
+        sanitizedInput = whitespacePattern.matcher(sanitizedInput).replaceAll("");
+        sanitizedInput = commaPattern.matcher(sanitizedInput).replaceAll("");
+        return sanitizedInput;
     }
 
     @Override

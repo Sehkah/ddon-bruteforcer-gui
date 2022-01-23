@@ -31,7 +31,6 @@ public class MainMenuModelImpl implements MainMenuModel, Bruteforcer.BruteforceL
     @Override
     public void bruteforce(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
         this.stopMs = stopMs;
-        logger.debug("MainMenuModelImpl -> bruteforce");
         executorService.submit(() -> bruteforcer.start(startMs, stopMs, keyDepth, ciphertext, expectedPlaintext));
     }
 

@@ -60,6 +60,7 @@ public class BruteforcerImpl implements Bruteforcer {
 
     @Override
     public void start(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
+        logger.debug("bruteforce requested: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
         Instant start = Instant.now();
         byte[] byteCiphertext = Hex.decode(ciphertext);
         byte[] byteExpectedPlaintext = Hex.decode(expectedPlaintext);
