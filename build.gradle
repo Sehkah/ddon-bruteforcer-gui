@@ -7,6 +7,12 @@ plugins {
 }
 
 ext {
+    netJavaDevJnaVersion = '5.10.0'
+    commonsIoVersion = '2.11.0'
+    orgApacheLoggingLog4jVersion = '2.17.2'
+    comFasterxmlJacksonVersion = '2.13.2'
+    orgKordampIkonliVersion = '12.3.1'
+    orgBouncycastleVersion = '1.70'
     junitVersion = '5.8.2'
 }
 
@@ -27,21 +33,23 @@ javafx {
 
 dependencies {
     // https://mvnrepository.com/artifact/net.java.dev.jna/jna
-    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.10.0'
+    implementation group: 'net.java.dev.jna', name: 'jna', version: "${netJavaDevJnaVersion}"
     // https://mvnrepository.com/artifact/commons-io/commons-io
-    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'commons-io', name: 'commons-io', version: "${commonsIoVersion}"
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.17.1'
-    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.17.1
-    runtimeOnly group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.17.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${orgApacheLoggingLog4jVersion}"
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    runtimeOnly group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${orgApacheLoggingLog4jVersion}"
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
-    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.13.1'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: "${comFasterxmlJacksonVersion}"
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${comFasterxmlJacksonVersion}"
     // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx
-    implementation group: 'org.kordamp.ikonli', name: 'ikonli-javafx', version: '12.3.0'
-    // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-bootstrapicons-pack/12.3.0
-    implementation group: 'org.kordamp.ikonli', name: 'ikonli-bootstrapicons-pack', version: '12.3.0'
+    implementation group: 'org.kordamp.ikonli', name: 'ikonli-javafx', version: "${orgKordampIkonliVersion}"
+    // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-bootstrapicons-pack
+    implementation group: 'org.kordamp.ikonli', name: 'ikonli-bootstrapicons-pack', version: "${orgKordampIkonliVersion}"
     // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.70'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: "${orgBouncycastleVersion}"
 
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitVersion}"
@@ -116,7 +124,7 @@ jpackage.doLast {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(sourceCompatibility.toString())
         vendor = JvmVendorSpec.matching('Eclipse')
     }
 }
