@@ -3,11 +3,11 @@ package org.sehkah.ddonbruteforcergui.model.pcap;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class Packet {
     @JsonProperty("Timestamp")
-    private Date timestamp;
+    private Instant timestamp;
 
     @JsonProperty("Direction")
     private String direction;
@@ -16,18 +16,18 @@ public class Packet {
     private String data;
 
     @JsonCreator
-    public Packet(@JsonProperty("Timestamp") Date timestamp, @JsonProperty("Direction") String direction,
+    public Packet(@JsonProperty("Timestamp") Instant timestamp, @JsonProperty("Direction") String direction,
                   @JsonProperty("Data") String data) {
         this.timestamp = timestamp;
         this.direction = direction;
         this.data = data;
     }
 
-    public Date getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 
