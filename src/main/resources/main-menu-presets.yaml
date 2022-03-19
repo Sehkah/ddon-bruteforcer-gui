@@ -107,3 +107,25 @@
   startMs: 2393
   stopMs: 2393
   keyDepth: 2309
+
+############
+# stream 51
+############
+"stream 51 session 1 login":
+  expectedPlaintext: 010000023400000000
+  ciphertext: 015B821F3C9946F3378245DCB9201EF6
+  startMs: 5410
+  stopMs: 5410
+  keyDepth: 1117
+"stream 51 session 1 server select":
+  expectedPlaintext: 2C0000023400000000
+  ciphertext: 2598126761A3BDD0EB7FD7A8831AB564
+  startMs: 5410
+  stopMs: 5410
+  keyDepth: 2389
+"stream 51 session 1 game":
+  expectedPlaintext: 2C0000023400000000
+  ciphertext: 0A0168E336EBB9AD186B8F5A75ECC578
+  startMs: 5410
+  stopMs: 5410
+  keyDepth: 2749
