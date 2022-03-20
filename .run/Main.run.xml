@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="org.sehkah.ddonbruteforcergui.Main" />
+    <option name="MAIN_CLASS_NAME" value="org.sehkah.ddon.tools.Main" />
     <module name="ddon-bruteforcer-gui.main" />
     <option name="VM_PARAMETERS" value="-Djna.library.path=lib/win32-x86-64" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="org.sehkah.ddonbruteforcergui.*" />
+        <option name="PATTERN" value="org.sehkah.ddon.tools.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
