@@ -1,4 +1,4 @@
-package org.sehkah.ddon.tools.bruteforcer.view.main;
+package org.sehkah.ddon.tools.bruteforcer.view;
 
 public class MainMenuPreset {
     private String expectedPlaintext;

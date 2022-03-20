@@ -1,4 +1,4 @@
-package org.sehkah.ddon.tools.bruteforcer.view.main;
+package org.sehkah.ddon.tools.bruteforcer.view;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;

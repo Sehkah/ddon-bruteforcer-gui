@@ -1,4 +1,4 @@
-package org.sehkah.ddon.tools.bruteforcer.controller.main;
+package org.sehkah.ddon.tools.bruteforcer.controller;
 
 import javafx.stage.Stage;
 import org.sehkah.ddon.common.controller.Controller;

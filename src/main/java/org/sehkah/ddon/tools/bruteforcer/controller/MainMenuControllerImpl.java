@@ -1,12 +1,12 @@
-package org.sehkah.ddon.tools.bruteforcer.controller.main;
+package org.sehkah.ddon.tools.bruteforcer.controller;
 
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.sehkah.ddon.tools.bruteforcer.model.main.MainMenuModel;
-import org.sehkah.ddon.tools.bruteforcer.model.main.MainMenuModelImpl;
-import org.sehkah.ddon.tools.bruteforcer.view.main.MainMenuView;
-import org.sehkah.ddon.tools.bruteforcer.view.main.MainMenuViewImpl;
+import org.sehkah.ddon.tools.bruteforcer.model.MainMenuModel;
+import org.sehkah.ddon.tools.bruteforcer.model.MainMenuModelImpl;
+import org.sehkah.ddon.tools.bruteforcer.view.MainMenuView;
+import org.sehkah.ddon.tools.bruteforcer.view.MainMenuViewImpl;
 
 public class MainMenuControllerImpl implements MainMenuController {
     private static final Logger logger = LogManager.getLogger();

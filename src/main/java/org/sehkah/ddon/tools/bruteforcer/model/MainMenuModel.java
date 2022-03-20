@@ -1,4 +1,4 @@
-package org.sehkah.ddon.tools.bruteforcer.model.main;
+package org.sehkah.ddon.tools.bruteforcer.model;
 
 import org.sehkah.ddon.common.model.Model;
 

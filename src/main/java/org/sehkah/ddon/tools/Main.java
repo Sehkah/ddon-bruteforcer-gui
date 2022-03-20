@@ -4,8 +4,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.sehkah.ddon.tools.bruteforcer.controller.main.MainMenuController;
-import org.sehkah.ddon.tools.bruteforcer.controller.main.MainMenuControllerImpl;
+import org.sehkah.ddon.tools.bruteforcer.controller.MainMenuController;
+import org.sehkah.ddon.tools.bruteforcer.controller.MainMenuControllerImpl;
 
 public class Main extends Application {
     private static final Logger logger = LogManager.getLogger();
