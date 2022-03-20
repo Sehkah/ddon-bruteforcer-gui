@@ -16,7 +16,7 @@ public class PacketIdConstants {
         Serializer serializer = new SerializerImpl();
         String packetIdYaml = null;
         try {
-            packetIdYaml = IOUtils.toString(ClassLoader.getSystemClassLoader().getResource("packet-ids.yaml"), StandardCharsets.UTF_8);
+            packetIdYaml = IOUtils.toString(ClassLoader.getSystemClassLoader().getResource("streamdecryptor_packet-ids.yaml"), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
