@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<Stage title="%stageTitle" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <scene>
+        <Scene>
+            <root>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                    <GridPane VBox.vgrow="ALWAYS">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
+                            <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" />
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints fillHeight="false" valignment="CENTER" vgrow="SOMETIMES" />
+                            <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                            <RowConstraints fillHeight="false" valignment="CENTER" vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <Label fx:id="packetStreamInputLabel" text="%packetStreamInputLabelText">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                </GridPane.margin>
+                            </Label>
+                            <Label fx:id="packetStreamOutputLabel" text="%packetStreamOutputLabelText" GridPane.columnIndex="2">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                </GridPane.margin>
+                            </Label>
+                            <TextArea fx:id="packetStreamInputTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="%packetStreamInputTextAreaPromptText" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                </GridPane.margin>
+                            </TextArea>
+                            <TextArea fx:id="packetStreamOutputTextArea" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                </GridPane.margin>
+                            </TextArea>
+                            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <rowConstraints>
+                                    <RowConstraints fillHeight="false" vgrow="NEVER" />
+                                    <RowConstraints fillHeight="false" vgrow="NEVER" />
+                                </rowConstraints>
+                                <children>
+                                    <Button fx:id="decryptButton" disable="true" mnemonicParsing="false" text="%decryptButtonText">
+                                        <graphic>
+                                            <FontIcon iconLiteral="bi-unlock" />
+                                        </graphic>
+                                        <GridPane.margin>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        </GridPane.margin>
+                                    </Button>
+                                    <Label contentDisplay="RIGHT" GridPane.rowIndex="1">
+                                        <graphic>
+                                            <FontIcon iconLiteral="bi-arrow-right" iconSize="16" />
+                                        </graphic>
+                                    </Label>
+                                </children>
+                                <columnConstraints>
+                                    <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" />
+                                </columnConstraints>
+                            </GridPane>
+                            <GridPane GridPane.rowIndex="2">
+                                <columnConstraints>
+                                    <ColumnConstraints fillWidth="false" hgrow="NEVER" />
+                                    <ColumnConstraints fillWidth="false" hgrow="NEVER" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                </rowConstraints>
+                                <children>
+                                    <Button fx:id="openFileButton" mnemonicParsing="false" text="%openFileButtonText">
+                                        <graphic>
+                                            <FontIcon iconLiteral="bi-folder2-open" />
+                                        </graphic>
+                                        <GridPane.margin>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        </GridPane.margin>
+                                    </Button>
+                                    <Label fx:id="packetStreamInputKeyLabel" text="%packetStreamInputKeyLabelText" GridPane.columnIndex="1">
+                                        <graphic>
+                                            <FontIcon fx:id="packetStreamInputKeyFontIcon" iconColor="#990000" iconLiteral="bi-key" />
+                                        </graphic>
+                                    </Label>
+                                </children>
+                            </GridPane>
+                            <GridPane GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                <columnConstraints>
+                                    <ColumnConstraints fillWidth="false" hgrow="NEVER" />
+                                    <ColumnConstraints fillWidth="false" hgrow="NEVER" />
+                                    <ColumnConstraints fillWidth="false" hgrow="NEVER" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <Button fx:id="copyFileButton" disable="true" mnemonicParsing="false" text="%copyFileButtonText" GridPane.columnIndex="2">
+                                        <graphic>
+                                            <FontIcon iconLiteral="bi-files" />
+                                        </graphic>
+                                        <GridPane.margin>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        </GridPane.margin>
+                                    </Button>
+                                    <Button fx:id="saveFileButton" disable="true" mnemonicParsing="false" text="%saveFileButtonText" GridPane.columnIndex="1">
+                                        <graphic>
+                                            <FontIcon iconLiteral="bi-save" />
+                                        </graphic>
+                                        <GridPane.margin>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        </GridPane.margin>
+                                    </Button>
+                                    <CheckBox fx:id="hexFormatCheckBox" mnemonicParsing="false" text="%hexFormatCheckBoxText">
+                                        <graphic>
+                                            <FontIcon iconLiteral="bi-file-earmark-binary" />
+                                        </graphic>
+                                        <GridPane.margin>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        </GridPane.margin>
+                                    </CheckBox>
+                                </children>
+                            </GridPane>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        </VBox.margin>
+                    </GridPane>
+                    <GridPane>
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <ProgressBar fx:id="progressbar" maxWidth="1.7976931348623157E308" progress="0.0" GridPane.columnIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                </GridPane.margin>
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                            </ProgressBar>
+                            <Label fx:id="stopwatchLabel">
+                                <graphic>
+                                    <FontIcon iconLiteral="bi-stopwatch" />
+                                </graphic>
+                                <GridPane.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                </GridPane.margin>
+                            </Label>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        </VBox.margin>
+                    </GridPane>
+                </VBox>
+            </root>
+        </Scene>
+    </scene>
+</Stage>
