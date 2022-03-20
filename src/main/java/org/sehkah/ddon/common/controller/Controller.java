@@ -5,5 +5,4 @@ public interface Controller {
 
     void handleCloseRequest();
 
-    void handleCancelRequest();
 }
