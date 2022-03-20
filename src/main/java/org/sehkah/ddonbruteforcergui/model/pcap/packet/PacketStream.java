@@ -1,6 +1,4 @@
-package org.sehkah.ddonbruteforcergui.model.pcap;
-
-import org.sehkah.ddonbruteforcergui.model.pcap.packet.Packet;
+package org.sehkah.ddonbruteforcergui.model.pcap.packet;
 
 import java.util.Date;
 import java.util.List;

@@ -2,6 +2,8 @@ package org.sehkah.ddonbruteforcergui.model.pcap;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
+import org.sehkah.ddonbruteforcergui.model.pcap.packet.PacketStream;
+import org.sehkah.ddonbruteforcergui.model.serialization.SerializerImpl;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,5 +20,6 @@ class PacketStreamDecryptorImplTest {
         PacketStream stream = splitStreamDecryptor.decrypt(splitStream, key);
         assertEquals("AQAAAjQAAAAAAAAAAAAAAAAQEIl57taYrVB4VQLMuYiuyYhHxUDv5rixc585qXJf0znXihkAAAAAKP58AAAAAABw7BsFAAAAACK5dj8BAAAAKmVASrH9fCbAZp/qUwEm",
                 stream.packets().get(2).data());
+        System.out.println(new SerializerImpl().serializeJson(stream));
     }
 }

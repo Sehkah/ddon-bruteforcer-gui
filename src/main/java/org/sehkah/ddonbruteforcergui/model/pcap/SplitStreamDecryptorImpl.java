@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.encoders.Base64;
 import org.sehkah.ddonbruteforcergui.model.crypto.CamelliaDecryptor;
 import org.sehkah.ddonbruteforcergui.model.pcap.packet.Packet;
+import org.sehkah.ddonbruteforcergui.model.pcap.packet.PacketId;
+import org.sehkah.ddonbruteforcergui.model.pcap.packet.PacketIdConstants;
+import org.sehkah.ddonbruteforcergui.model.pcap.packet.PacketStream;
 import org.sehkah.ddonbruteforcergui.model.serialization.Serializer;
 import org.sehkah.ddonbruteforcergui.model.serialization.SerializerImpl;
 
@@ -26,7 +29,7 @@ public class SplitStreamDecryptorImpl implements SplitStreamDecryptor {
         PacketStream encryptedStream = null;
         PacketStream decryptedStream = null;
         try {
-            encryptedStream = serializer.deserialize(splitStreamInput, PacketStream.class);
+            encryptedStream = serializer.deserializeJson(splitStreamInput, PacketStream.class);
             List<Packet> encryptedPackets = encryptedStream.packets();
             List<Packet> decryptedPackets = new ArrayList<>(encryptedPackets.size());
             for (int i = 0; i < encryptedPackets.size(); i++) {
@@ -34,11 +37,17 @@ public class SplitStreamDecryptorImpl implements SplitStreamDecryptor {
                 byte[] decryptedData;
                 if (i < 2) {
                     // The first 2 packets contain key exchange data, as this is not interesting, not handling it here
-                    decryptedData = encryptedPacket.data().getBytes(StandardCharsets.UTF_8);
+                    decryptedPackets.add(encryptedPacket);
                 } else {
                     decryptedData = CamelliaDecryptor.decryptPacketData(Base64.decode(encryptedPacket.data()), key.getBytes(StandardCharsets.UTF_8));
+                    int groupId = decryptedData[0];
+                    int id = Integer.parseInt(decryptedData[1] + "" + decryptedData[2]);
+                    int subId = decryptedData[3];
+                    int packetCounter = decryptedData[8];
+                    decryptedPackets.add(new Packet(encryptedPacket.timestamp(), encryptedPacket.direction(), Base64.toBase64String(decryptedData),
+                            new PacketId(groupId, id, subId, PacketIdConstants.getPacketIdName(groupId, id, subId)),
+                            packetCounter));
                 }
-                decryptedPackets.add(new Packet(encryptedPacket.timestamp(), encryptedPacket.direction(), Base64.toBase64String(decryptedData)));
             }
             decryptedStream = new PacketStream(false, key, encryptedStream.logStartTime(), encryptedStream.serverType(), encryptedStream.serverIp(), decryptedPackets);
         } catch (JsonProcessingException e) {
