@@ -17,6 +17,6 @@ class PacketStreamDecryptorImplTest {
         String key = "UpJlo7MYHVbxS3Xs7LAx-sptfA5Q3Mw-";
         PacketStream stream = splitStreamDecryptor.decrypt(splitStream, key);
         assertEquals("AQAAAjQAAAAAAAAAAAAAAAAQEIl57taYrVB4VQLMuYiuyYhHxUDv5rixc585qXJf0znXihkAAAAAKP58AAAAAABw7BsFAAAAACK5dj8BAAAAKmVASrH9fCbAZp/qUwEm",
-                stream.getPackets().get(2).getData());
+                stream.packets().get(2).data());
     }
 }

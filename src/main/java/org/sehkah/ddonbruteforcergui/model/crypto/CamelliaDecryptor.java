@@ -13,7 +13,6 @@ import java.security.Security;
 import java.util.Arrays;
 
 import static org.sehkah.ddonbruteforcergui.model.crypto.CamelliaConstants.CAMELLIA_DEFAULT_IV;
-import static org.sehkah.ddonbruteforcergui.model.crypto.CamelliaConstants.CAMELLIA_DEFAULT_KEY;
 
 public class CamelliaDecryptor {
     private static final PaddedBufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new CamelliaEngine()), new ZeroBytePadding());
@@ -24,10 +23,6 @@ public class CamelliaDecryptor {
 
     private CamelliaDecryptor() {
 
-    }
-
-    public static byte[] decryptPacketKeyExchangeData(byte[] input) {
-        return decryptPacketData(input, CAMELLIA_DEFAULT_KEY);
     }
 
     public static byte[] decryptPacketData(byte[] input, byte[] key) {
