@@ -1,6 +1,10 @@
 plugins {
+    // built-in plugins
     id 'java'
     id 'application'
+    id 'jacoco'
+    id 'project-report'
+    // community plugins
     id 'org.openjfx.javafxplugin'
     id 'org.beryx.jlink'
     id 'org.javamodularity.moduleplugin'
@@ -14,21 +18,7 @@ ext {
     orgKordampIkonliVersion = '12.3.1'
     orgBouncycastleVersion = '1.70'
     junitVersion = '5.8.2'
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-application {
-    applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8', '-Djna.library.path=lib/win32-x86-64']
-    mainModule = 'org.sehkah.ddon.tools'
-    mainClass = 'org.sehkah.ddon.tools.Main'
-}
-
-javafx {
-    version = '17.0.1'
-    modules = ['javafx.controls', 'javafx.fxml']
+    javaFxVersion = '17.0.2'
 }
 
 dependencies {
@@ -57,6 +47,21 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: "${junitVersion}"
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitVersion}"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8', '-Djna.library.path=lib/win32-x86-64']
+    mainModule = 'org.sehkah.ddon.tools'
+    mainClass = 'org.sehkah.ddon.tools.Main'
+}
+
+javafx {
+    version = "${javaFxVersion}"
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 test {
