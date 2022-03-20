@@ -5,7 +5,7 @@ import org.sehkah.ddon.tools.bruteforcer.model.crypto.SeededXorshift128;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class SeededXorshift128NativeTest {
+class SeededXorshift128Test {
     private static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_".toCharArray();
 
     @Test

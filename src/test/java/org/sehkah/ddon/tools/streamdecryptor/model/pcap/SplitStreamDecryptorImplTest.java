@@ -1,9 +1,7 @@
-package org.sehkah.ddon.tools.bruteforcer.model.pcap;
+package org.sehkah.ddon.tools.streamdecryptor.model.pcap;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
-import org.sehkah.ddon.tools.streamdecryptor.model.pcap.SplitStreamDecryptor;
-import org.sehkah.ddon.tools.streamdecryptor.model.pcap.SplitStreamDecryptorImpl;
 import org.sehkah.ddon.tools.streamdecryptor.model.pcap.packet.PacketStream;
 import org.sehkah.ddon.tools.streamdecryptor.model.serialization.SerializerImpl;
 
@@ -12,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PacketStreamDecryptorImplTest {
+class SplitStreamDecryptorImplTest {
 
     @Test
     void decrypt() throws IOException {
