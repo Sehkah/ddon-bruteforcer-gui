@@ -2,10 +2,10 @@ package org.sehkah.ddon.tools.bruteforcer.model.main;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.sehkah.ddon.common.view.View;
+import org.sehkah.ddon.tools.bruteforcer.model.crypto.BruteforceTaskResult;
 import org.sehkah.ddon.tools.bruteforcer.model.crypto.Bruteforcer;
 import org.sehkah.ddon.tools.bruteforcer.model.crypto.BruteforcerImpl;
-import org.sehkah.ddon.tools.bruteforcer.model.crypto.BruteforceTaskResult;
-import org.sehkah.ddon.common.view.View;
 import org.sehkah.ddon.tools.bruteforcer.view.main.MainMenuView;
 
 import java.util.ArrayList;

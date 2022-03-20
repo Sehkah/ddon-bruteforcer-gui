@@ -1,14 +1,16 @@
 package org.sehkah.ddon.common.model.crypto;
 
 import org.bouncycastle.util.encoders.Base64;
-import org.bouncycastle.util.encoders.Hex;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HexFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CamelliaDecryptorTest {
+    private static final HexFormat hexFormatter = HexFormat.of();
+
     /**
      * Works Server #000000 (1.0.2) L2C_CLIENT_CHALLENGE_RES
      */
@@ -18,7 +20,7 @@ class CamelliaDecryptorTest {
         String key = "UpJlo7MYHVbxS3Xs7LAx-sptfA5Q3Mw-";
         byte[] decryptedPacketData = CamelliaDecryptor.decryptPacketData(Base64.decode(packetData), key.getBytes(StandardCharsets.UTF_8));
         assertEquals("010000023400000000000000000000000010108979EED698AD50785502CCB988AEC98847C540EFE6B8B1739F39A9725FD339D78A190000000028FE7C000000000070EC1B050000000022B9763F010000002A65404AB1FD7C26C0669FEA530126",
-                Hex.toHexString(decryptedPacketData).toUpperCase());
+                hexFormatter.formatHex(decryptedPacketData).toUpperCase());
     }
 
     /**
@@ -30,6 +32,6 @@ class CamelliaDecryptorTest {
         String key = "UpJlo7MYHVbxS3Xs7LAx-sptfA5Q3Mw-";
         byte[] decryptedPacketData = CamelliaDecryptor.decryptPacketData(Base64.decode(packetData), key.getBytes(StandardCharsets.UTF_8));
         assertEquals("0000010100000000010014386A667671716C75796130346B34386B3430346301",
-                Hex.toHexString(decryptedPacketData).toUpperCase());
+                hexFormatter.formatHex(decryptedPacketData).toUpperCase());
     }
 }

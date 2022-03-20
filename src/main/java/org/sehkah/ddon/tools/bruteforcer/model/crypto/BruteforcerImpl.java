@@ -2,15 +2,12 @@ package org.sehkah.ddon.tools.bruteforcer.model.crypto;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bouncycastle.util.encoders.Hex;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class BruteforcerImpl implements Bruteforcer, Bruteforcer.BruteforceTaskListener {
+    private static final HexFormat hexFormatter = HexFormat.of();
     private static final Logger logger = LogManager.getLogger();
     private final List<Bruteforcer.BruteforceListener> bruteforceListeners;
     private ExecutorService executorService;
@@ -61,8 +58,8 @@ public class BruteforcerImpl implements Bruteforcer, Bruteforcer.BruteforceTaskL
     public void start(int startMs, int stopMs, int keyDepth, String ciphertext, String expectedPlaintext) {
         logger.debug("bruteforce requested: {} {} {} {} {}", expectedPlaintext, ciphertext, startMs, stopMs, keyDepth);
         bruteforceListeners.forEach(bruteforceListener -> bruteforceListener.onBruteforceProgressUpdate(0));
-        byte[] byteCiphertext = Hex.decode(ciphertext);
-        byte[] byteExpectedPlaintext = Hex.decode(expectedPlaintext);
+        byte[] byteCiphertext = hexFormatter.parseHex(ciphertext);
+        byte[] byteExpectedPlaintext = hexFormatter.parseHex(expectedPlaintext);
         List<BruteforceTask> bruteforceTasks = new ArrayList<>(stopMs - startMs);
         for (int milliseconds = startMs; milliseconds <= stopMs; milliseconds++) {
             bruteforceTasks.add(new BruteforceTask(milliseconds, keyDepth, byteCiphertext, byteExpectedPlaintext, this));
