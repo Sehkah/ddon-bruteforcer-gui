@@ -86,7 +86,7 @@ public class MainMenuViewImpl implements MainMenuView {
     public void start(Stage stage) {
         logger.debug("Starting stage");
         try {
-            this.stage = loadFxml("main-menu.fxml", "i18n/main-menu", this);
+            this.stage = loadFxml("bruteforcer_main-menu.fxml", "i18n/bruteforcer_main-menu", this);
             setupListeners();
             setupData();
             this.stage.centerOnScreen();
@@ -106,7 +106,7 @@ public class MainMenuViewImpl implements MainMenuView {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
         try {
-            String presetsContent = IOUtils.toString(ClassLoader.getSystemClassLoader().getResource("main-menu-presets.yaml"), StandardCharsets.UTF_8);
+            String presetsContent = IOUtils.toString(ClassLoader.getSystemClassLoader().getResource("bruteforcer_main-menu-presets.yaml"), StandardCharsets.UTF_8);
             presets = mapper.readValue(presetsContent, new TypeReference<>() {
             });
             presets.keySet().forEach(preset -> bruteforcePresetsComboBox.getItems().add(preset));
